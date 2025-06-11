@@ -1,0 +1,15 @@
+[package]
+name = "reinforced-shrine-adventure"
+description = "A remake of reinforced-shrine-adventure game in Bevy!"
+version = "0.1.0"
+edition = "2024"
+license-file = "../LICENSE"
+
+[dependencies]
+bevy = "0.16"
+
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
