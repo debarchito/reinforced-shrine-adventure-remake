@@ -2,22 +2,27 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    oxalica.url = "github:oxalica/rust-overlay";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     {
       self,
       nixpkgs,
       flake-utils,
-      oxalica,
+      rust-overlay,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
+        lib = nixpkgs.lib;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ oxalica.overlays.default ];
+          overlays = [ (import rust-overlay) ];
         };
+        for-linux = list: lib.optionals (lib.strings.hasInfix "linux" system) list;
       in
       {
         packages = rec {
@@ -35,10 +40,23 @@
                 pkgs.mold
                 pkgs.pkg-config
               ];
-              buildInputs = [
-                pkgs.alsa-lib.dev
-                pkgs.udev.dev
+              xorgBuildInputs = [
+                pkgs.xorg.libX11
+                pkgs.xorg.libXcursor
+                pkgs.xorg.libXi
               ];
+              waylandBuildInputs = [
+                pkgs.libxkbcommon
+                pkgs.wayland
+              ];
+              buildInputs =
+                for-linux [
+                  pkgs.alsa-lib
+                  pkgs.udev
+                  pkgs.vulkan-loader
+                ]
+                ++ for-linux xorgBuildInputs
+                ++ for-linux waylandBuildInputs;
               cargoLock.lockFile = ./Cargo.lock;
               LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath buildInputs;
               RUSTFLAGS = "-Clink-arg=-fuse-ld=mold";
