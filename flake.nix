@@ -22,7 +22,7 @@
           inherit system;
           overlays = [ (import rust-overlay) ];
         };
-        for-linux = list: lib.optionals (lib.strings.hasInfix "linux" system) list;
+        forLinux = list: lib.optionals (lib.strings.hasInfix "linux" system) list;
       in
       {
         packages = rec {
@@ -50,13 +50,13 @@
                 pkgs.wayland
               ];
               buildInputs =
-                for-linux [
+                forLinux [
                   pkgs.alsa-lib
                   pkgs.udev
                   pkgs.vulkan-loader
                 ]
-                ++ for-linux xorgBuildInputs
-                ++ for-linux waylandBuildInputs;
+                ++ forLinux xorgBuildInputs
+                ++ forLinux waylandBuildInputs;
               cargoLock.lockFile = ./Cargo.lock;
               LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath buildInputs;
               RUSTFLAGS = "-Clink-arg=-fuse-ld=mold";
