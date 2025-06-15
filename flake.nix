@@ -58,7 +58,7 @@
                 ++ forLinux xorgBuildInputs
                 ++ forLinux waylandBuildInputs;
               cargoLock.lockFile = ./Cargo.lock;
-              LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath buildInputs;
+              LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
               RUSTFLAGS = "-Clink-arg=-fuse-ld=mold";
             };
           default = reinforced-shrine-adventure;
