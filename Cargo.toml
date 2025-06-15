@@ -6,7 +6,7 @@ edition = "2024"
 license-file = "../LICENSE"
 
 [dependencies]
-bevy = "0.16"
+bevy = { version = "0.16", features = ["wayland"] }
 
 [profile.dev]
 opt-level = 1

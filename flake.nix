@@ -39,6 +39,7 @@
               nativeBuildInputs = [
                 pkgs.mold
                 pkgs.pkg-config
+                pkgs.just
               ];
               xorgBuildInputs = [
                 pkgs.xorg.libX11
