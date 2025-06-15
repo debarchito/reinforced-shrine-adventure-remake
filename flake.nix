@@ -37,9 +37,9 @@
               name = "reinforced-shrine-adventure";
               src = self;
               nativeBuildInputs = [
+                pkgs.just
                 pkgs.mold
                 pkgs.pkg-config
-                pkgs.just
               ];
               xorgBuildInputs = [
                 pkgs.xorg.libX11
