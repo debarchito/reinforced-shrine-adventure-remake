@@ -29,8 +29,8 @@
           reinforced-shrine-adventure =
             let
               rustPlatform = pkgs.makeRustPlatform rec {
-                rustc = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
-                cargo = rustc;
+                cargo = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
+                rustc = cargo;
               };
             in
             rustPlatform.buildRustPackage rec {
