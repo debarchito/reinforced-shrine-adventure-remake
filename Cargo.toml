@@ -3,7 +3,7 @@ name = "reinforced-shrine-adventure"
 description = "A remake of reinforced-shrine-adventure game in Bevy!"
 version = "0.1.0"
 edition = "2024"
-license-file = "../LICENSE"
+license-file = "./LICENSE"
 
 [dependencies]
 bevy = { version = "0.16", features = ["wayland"] }
